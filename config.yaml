@@ -4,11 +4,13 @@ api:
   port: 3000
   host: localhost
 database:
-  connectionHost: localhost
-  connectionPort: 5432
-  connectionUser: acme
-  connectionPassword: acme@123
-  ormMaxPoolSize: 40
-  ormIdleTimeoutMillis: 10000
-  ormAutoSync: false
-  dbNameUser: db_user
+  connection:
+    host: localhost
+    port: 5432
+    username: acme
+    password: acme@123
+  orm:
+    maxPoolSize: 40
+    idleTimeoutMillis: 10000
+    autoSync: false
+  user: db_user
