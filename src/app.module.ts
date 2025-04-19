@@ -5,11 +5,7 @@ import { UserModule } from './modules/user/user.module'
 import { ConfigModule } from './common/config/config.module'
 
 @Module({
-    imports: [
-        ConfigModule.register(false),
-        DatabaseModule.register(),
-        UserModule
-    ],
+    imports: [ConfigModule.register(), DatabaseModule.register(), UserModule],
     controllers: [],
     providers: []
 })
