@@ -6,7 +6,7 @@ import { ConfigModule } from './common/config/config.module'
 
 @Module({
     imports: [
-        ConfigModule.register(true),
+        ConfigModule.register(false),
         DatabaseModule.register(),
         UserModule
     ],
