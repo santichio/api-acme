@@ -8,7 +8,7 @@ import { randomUUID } from 'crypto'
 import { existsSync } from 'fs'
 
 import { HttpRequest } from '../interfaces/HttpResquest.interface'
-import { configOptionsSchema } from './schemas/configOptions.schema'
+import { envConfigOptionsSchema } from './schemas/envConfigOptions.schema'
 import options from './options'
 import { join } from 'path'
 
@@ -39,7 +39,7 @@ export class ConfigModule {
               }
             : {
                   // .ENV file options
-                  validationSchema: configOptionsSchema,
+                  validationSchema: envConfigOptionsSchema,
                   validationOptions: {
                       allowUnknow: false,
                       abortEarly: false
