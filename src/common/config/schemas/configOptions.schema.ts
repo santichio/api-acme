@@ -1,11 +1,11 @@
 import * as Joi from 'joi'
 
-import { envOptionsSchema } from './envOptions.schema'
+import { enviromentOptionsSchema } from './enviromentOptions.schema'
 import { apiOptionsSchema } from './apiOptions.schema'
 import { databaseOptionsSchema } from './databaseOptions.schema'
 
 export const configOptionsSchema = Joi.object({
-    ...envOptionsSchema,
+    ...enviromentOptionsSchema,
     ...apiOptionsSchema,
     ...databaseOptionsSchema
 })

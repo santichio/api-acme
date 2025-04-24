@@ -1,28 +1,38 @@
-import { envEnum } from '../enums/env.enum'
+import { deploymentEnviromentsEnum } from '../enums/deploymentEnviroments.enum'
+import { enviromentsEnum } from '../enums/enviroments.enum'
 
+// Layer 0
 export interface ConfigOptionsInterface {
-    env: EnvOptionsInterface
-    api: ApiOptionsInterface
+    enviroment?: EnviromentOptionsInterface
+    api?: ApiOptionsInterface
     database: DatabaseOptionsInterface
 }
 
-export interface EnvOptionsInterface {
-    nodeEnv?: envEnum
+// Layer 1
+export interface EnviromentOptionsInterface {
+    nodeEnv?: enviromentsEnum
+    deployment?: deploymentEnviromentsEnum
 }
 
+// Layer 1
 export interface ApiOptionsInterface {
     port?: number
     host?: string
 }
 
+// Layer 1
 export interface DatabaseOptionsInterface {
-    connectionHost: string | undefined
-    connectionPort: number | undefined
-    connectionUser: string | undefined
-    connectionPassword: string | undefined
-    ormMaxPoolSize?: number | undefined
-    ormIdleTimeoutMillis?: number | undefined
-    ormAutoSync?: boolean | undefined
-    // For each new database, provide a key
-    dbNameUser: string | undefined
+    connection: DatabaseConnectionOptionsInterface
+    user: string
+}
+
+// Layer 2
+export interface DatabaseConnectionOptionsInterface {
+    host: string
+    port: number
+    username: string
+    password: string
+    maxPoolSize?: number
+    idleTimeoutMillis?: number
+    autoSync?: boolean
 }
