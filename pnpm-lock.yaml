@@ -32,6 +32,9 @@ dependencies:
   '@nestjs/platform-express':
     specifier: ^11.0.1
     version: 11.0.20(@nestjs/common@11.0.20)(@nestjs/core@11.0.20)
+  dotenv:
+    specifier: ^16.5.0
+    version: 16.5.0
   joi:
     specifier: ^17.13.3
     version: 17.13.3
@@ -44,9 +47,6 @@ dependencies:
   rxjs:
     specifier: ^7.8.1
     version: 7.8.2
-  yaml:
-    specifier: ^2.7.1
-    version: 2.7.1
 
 devDependencies:
   '@eslint/eslintrc':
@@ -6676,12 +6676,6 @@ packages:
 
   /yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
-    dev: false
-
-  /yaml@2.7.1:
-    resolution: {integrity: sha512-10ULxpnOCQXxJvBgxsn9ptjq6uviG/htZKk9veJGhlqn3w/DxQ631zFF+nlQXLwmImeS5amR2dl2U8sg6U9jsQ==}
-    engines: {node: '>= 14'}
-    hasBin: true
     dev: false
 
   /yargs-parser@21.1.1:
