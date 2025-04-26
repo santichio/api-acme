@@ -12,7 +12,6 @@ import { SqlHighlighter } from '@mikro-orm/sql-highlighter'
  * @returns Options object
  */
 export function mikroOrmConfig(options: Db, enviroment: Env): Options {
-    // Common configuration idependent of enviroment
     const opt: Options = {
         host: options.connection.host,
         port: options.connection.port,
@@ -34,7 +33,10 @@ export function mikroOrmConfig(options: Db, enviroment: Env): Options {
             max: options.connection.maxPoolSize,
             idleTimeoutMillis: options.connection.idleTimeoutMillis
         },
-        extensions: [Migrator]
+        extensions: [Migrator],
+        schemaGenerator: {
+            disableForeignKeys: false
+        }
     }
 
     const env = enviroment ?? Env.DEVELOP
@@ -44,7 +46,7 @@ export function mikroOrmConfig(options: Db, enviroment: Env): Options {
 
         return defineConfig({
             ...opt,
-            debug: true,
+            debug: ['info', 'discovery'], // Check Logging section in MikroORM documentation
             highlighter
         })
     }
