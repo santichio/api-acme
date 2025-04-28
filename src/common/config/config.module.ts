@@ -2,8 +2,8 @@ import { DynamicModule, Module } from '@nestjs/common'
 import { ConfigModule as NestConfigModule } from '@nestjs/config'
 import { ClsModule } from 'nestjs-cls'
 import { randomUUID } from 'crypto'
+import { FastifyRequest as Request } from 'fastify'
 
-import { HttpRequest } from '../interfaces/HttpResquest.interface'
 import options from './configOptions'
 
 @Module({})
@@ -27,10 +27,11 @@ export class ConfigModule {
                     middleware: {
                         mount: true,
                         generateId: true,
-                        idGenerator: (req: HttpRequest) => {
-                            const id = req.headers['X-Request-Id']
+                        idGenerator: (req: Request['raw']) => {
+                            const id =
+                                req.headers['x-request-id'] ?? randomUUID()
 
-                            return Array.isArray(id) || !id ? randomUUID() : id
+                            return Array.isArray(id) ? randomUUID() : id
                         }
                     }
                 })
