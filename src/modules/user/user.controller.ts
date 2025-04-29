@@ -7,7 +7,7 @@ export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Get()
-    log() {
-        return this.userService.log('Hello world!')
+    async log() {
+        return await this.userService.log('Hello world!')
     }
 }
