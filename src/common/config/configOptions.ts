@@ -26,7 +26,8 @@ export default async (): Promise<ConfigOptionsInterface> => {
             },
             api: {
                 port: values.API_PORT,
-                host: values.API_HOST
+                host: values.API_HOST,
+                timeoutMillis: values.API_TIMEOUT_MILLIS
             },
             database: {
                 connection: {
