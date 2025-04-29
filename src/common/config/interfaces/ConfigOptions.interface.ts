@@ -18,6 +18,7 @@ export interface EnviromentOptionsInterface {
 export interface ApiOptionsInterface {
     port?: number
     host?: string
+    timeoutMillis?: number
 }
 
 // Layer 1

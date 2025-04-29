@@ -6,6 +6,7 @@ export interface EnvFileInterface {
     DEPLOYMENT: deploymentEnviromentsEnum
     API_PORT: number
     API_HOST: string
+    API_TIMEOUT_MILLIS: number
     DATABASE_CONNECTION_HOST: string
     DATABASE_CONNECTION_PORT: number
     DATABASE_CONNECTION_USER: string
