@@ -1,23 +1,32 @@
 import { defineConfig, Options } from '@mikro-orm/postgresql'
 import { Migrator } from '@mikro-orm/migrations'
 
-import { DatabaseOptionsInterface as Db } from '../config/interfaces/ConfigOptions.interface'
-import { enviromentsEnum as Env } from '../config/enums/enviroments.enum'
+import { IDatabaseOptions } from '../config/interfaces/ConfigOptions.interface'
+import { envEnum } from '../config/enums/env.enum'
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter'
 
 /**
- * Build a MikroORM connection options object, based on enviroment
- * @param options Object of database config
- * @param enviroment Enviroment enum ( prd | hml | dev | loc )
- * @returns Options object
+ * Build a MikroORM connection options object, based on node enviroment.
+ * If have more than one database connections, provide a context name for all.
+ * @param options object of database config
+ * @param enviroment enviroment enum ( prd | hml | dev | loc )
+ * @param dbName database name
+ * @param contextName context name
+ * @returns MikroORM options object
  */
-export function mikroOrmConfig(options: Db, enviroment: Env): Options {
-    const opt: Options = {
-        host: options.connection.host,
-        port: options.connection.port,
-        user: options.connection.username,
-        password: options.connection.password,
-        dbName: options.user,
+export function mikroOrmConfig(
+    options: IDatabaseOptions,
+    enviroment: envEnum,
+    dbName: string,
+    contextName?: string
+): Options {
+    // Construct base options object
+    const baseOptionsObj: Options = {
+        host: options.host,
+        port: options.port,
+        user: options.username,
+        password: options.password,
+        dbName,
         entities: ['./dist/**/*.entity.js'],
         entitiesTs: ['./src/**/*.entity.ts'],
         strict: true,
@@ -30,8 +39,8 @@ export function mikroOrmConfig(options: Db, enviroment: Env): Options {
         },
         pool: {
             min: 5,
-            max: options.connection.maxPoolSize,
-            idleTimeoutMillis: options.connection.idleTimeoutMillis
+            max: options.maxPoolSize,
+            idleTimeoutMillis: options.idleTimeoutMillis
         },
         extensions: [Migrator],
         schemaGenerator: {
@@ -39,17 +48,22 @@ export function mikroOrmConfig(options: Db, enviroment: Env): Options {
         }
     }
 
-    const env = enviroment ?? Env.DEVELOP
+    // Include context name if it provided
+    const optionsObj = contextName
+        ? { ...baseOptionsObj, contextName }
+        : baseOptionsObj
 
-    if (env === Env.DEVELOP || Env.LOCALHOST) {
+    // Return and include dev options if node enviroment is DEVELOP or LOCALHOST
+    if (enviroment === envEnum.DEVELOP || envEnum.LOCALHOST) {
         const highlighter = new SqlHighlighter()
 
         return defineConfig({
-            ...opt,
+            ...optionsObj,
             debug: ['info', 'discovery'], // Check Logging section in MikroORM documentation
             highlighter
         })
     }
 
-    return defineConfig(opt)
+    // Return options
+    return defineConfig(optionsObj)
 }

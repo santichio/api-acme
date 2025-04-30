@@ -20,6 +20,7 @@ export class ConfigModule {
                     isGlobal: true,
                     cache: true,
                     expandVariables: true,
+                    ignoreEnvFile: true,
                     load: [options]
                 }),
                 ClsModule.forRoot({

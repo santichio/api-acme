@@ -15,7 +15,7 @@ import { FastifyAdapter } from '@nestjs/platform-fastify'
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
-    private readonly logger = new Logger(GlobalExceptionFilter.name)
+    private readonly logger = new Logger('GlobalException')
 
     constructor(
         private readonly adapterHost: HttpAdapterHost<FastifyAdapter>

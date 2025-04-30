@@ -1,13 +1,13 @@
 import * as Joi from 'joi'
 
-import { enviromentsEnum } from '../enums/enviroments.enum'
-import { deploymentEnviromentsEnum } from '../enums/deploymentEnviroments.enum'
+import { envEnum } from '../enums/env.enum'
+import { deployEnum } from '../enums/deploy.enum'
 
 export const enviromentOptionsSchema = {
-    NODE_ENV: Joi.string()
-        .valid(...Object.values(enviromentsEnum))
-        .default(enviromentsEnum.DEVELOP),
-    DEPLOYMENT: Joi.string()
-        .valid(...Object.values(deploymentEnviromentsEnum))
-        .default(deploymentEnviromentsEnum.LOCALHOST)
+    ENV_NODE: Joi.string()
+        .valid(...Object.values(envEnum))
+        .default(envEnum.DEVELOP),
+    ENV_DEPLOY: Joi.string()
+        .valid(...Object.values(deployEnum))
+        .default(deployEnum.LOCALHOST)
 }
