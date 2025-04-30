@@ -10,12 +10,12 @@ export class UserService {
 
         // throw new NotFoundException('Banana')
 
-        // throw new Error('Banana')
+        throw new Error('Banana')
 
-        return new Promise(() =>
-            setTimeout(() => {
-                console.log(message)
-            }, 3001)
-        )
+        // return new Promise(() =>
+        //     setTimeout(() => {
+        //         console.log(message)
+        //     }, 3001)
+        // )
     }
 }
