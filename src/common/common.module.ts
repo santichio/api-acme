@@ -3,7 +3,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 
 import { ConfigModule } from './config/config.module'
 import { DatabaseModule } from './database/database.module'
-import { TimeoutInterceptor } from './interceptor/Timeout.interceptor'
+import { TimeoutInterceptor } from './interceptors/Timeout.interceptor'
 import { GlobalExceptionFilter } from './filters/GlobalException.filter'
 
 @Module({
