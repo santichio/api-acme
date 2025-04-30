@@ -6,7 +6,9 @@ import {
     RequestTimeoutException
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { catchError, Observable, throwError, timeout, TimeoutError } from 'rxjs'
+import { Observable, throwError, TimeoutError } from 'rxjs'
+import { catchError, timeout } from 'rxjs/operators'
+
 import { IConfigOptions } from '../config/interfaces/ConfigOptions.interface'
 
 @Injectable()
@@ -19,7 +21,7 @@ export class TimeoutInterceptor implements NestInterceptor {
         const apiOptions = this.configService.get('api', { infer: true })
 
         return next.handle().pipe(
-            timeout(apiOptions?.timeoutMillis ?? 3000),
+            timeout(apiOptions.timeoutMillis),
             catchError((err) => {
                 if (err instanceof TimeoutError) {
                     return throwError(() => new RequestTimeoutException())

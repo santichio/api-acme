@@ -7,11 +7,28 @@
  * @var ref reference code of response / error
  * @var error error description
  */
-export interface IResponse<T> {
+interface IResponseBase {
     message: string
     statusCode: number
-    data?: T
     timeStamp: string
+}
+
+export interface IResponse<T> extends IResponseBase {
+    metaData?: IMetaData
+    data?: T
+}
+
+export interface IResponseError extends IResponseBase {
     errorRef?: string
-    error?: unknown
+    error?: string
+    reqUrl?: string
+    reqMethod?: string
+    reqHost?: string
+}
+
+export interface IMetaData {
+    page?: number
+    limit?: number
+    offset?: number
+    total?: number
 }

@@ -10,7 +10,7 @@ import { GlobalExceptionFilter } from './filters/GlobalException.filter'
     imports: [ConfigModule.register(), DatabaseModule.register('acme')],
     providers: [
         { provide: APP_INTERCEPTOR, useClass: TimeoutInterceptor },
-        { provide: APP_FILTER, useClass: GlobalExceptionFilter }
+        // { provide: APP_FILTER, useClass: GlobalExceptionFilter }
     ]
 })
 export class CommonModule {}

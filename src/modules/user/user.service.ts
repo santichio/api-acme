@@ -8,9 +8,13 @@ export class UserService {
     log(message: string) {
         // console.log(`${this.cls.getId()} > ${message}`)
 
-        // throw new NotFoundException('Banana')
+        // return {
+        //     data: 'banana'
+        // }
 
-        throw new Error('Banana')
+        throw new NotFoundException()
+
+        // throw new Error('Banana')
 
         // return new Promise(() =>
         //     setTimeout(() => {
