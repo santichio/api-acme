@@ -10,7 +10,7 @@ import { HttpAdapterHost } from '@nestjs/core'
 import { randomUUID } from 'crypto'
 import { FastifyReply as Response, FastifyRequest as Request } from 'fastify'
 
-import { ResponseInterface } from '../interfaces/Response.interface'
+import { IResponse } from '../interfaces/Response.interface'
 import { FastifyAdapter } from '@nestjs/platform-fastify'
 
 @Catch()
@@ -35,7 +35,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         const reqHost = httpAdapter.getRequestHostname(request)
 
         if (exception instanceof HttpException) {
-            const res: ResponseInterface = {
+            const res: IResponse<any> = {
                 message: exception.message,
                 statusCode: exception.getStatus(),
                 error: exception.getResponse()['error'],
@@ -45,7 +45,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
             httpAdapter.reply(response, res, res.statusCode)
         } else {
-            const res: ResponseInterface = {
+            const res: IResponse<any> = {
                 message: 'Internal server error!',
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
                 timeStamp: new Date().toISOString(),

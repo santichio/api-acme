@@ -7,10 +7,10 @@
  * @var ref reference code of response / error
  * @var error error description
  */
-export interface ResponseInterface {
+export interface IResponse<T> {
     message: string
     statusCode: number
-    data?: any
+    data?: T
     timeStamp: string
     errorRef?: string
     error?: unknown
