@@ -1,24 +1,34 @@
 import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common'
 import { ClsService, InjectCls } from 'nestjs-cls'
+import { IPreResponse } from 'src/common/interfaces/Response.interface'
 
 @Injectable()
 export class UserService {
     constructor(@InjectCls() readonly cls: ClsService) {}
 
-    log(message: string) {
+    async log() {
         // console.log(`${this.cls.getId()} > ${message}`)
 
+        return {
+            message: 'You got a banana!',
+            data: 'banana'
+        }
+
+        // return 'banana'
+
         // return {
-        //     data: 'banana'
+        //     banana: 'banana'
         // }
 
-        throw new NotFoundException()
+        // throw new NotFoundException()
 
         // throw new Error('Banana')
 
-        // return new Promise(() =>
+        // await new Promise(() =>
         //     setTimeout(() => {
-        //         console.log(message)
+        //         return {
+        //             banana: 'TIMEOUT'
+        //         }
         //     }, 3001)
         // )
     }

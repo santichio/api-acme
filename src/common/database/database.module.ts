@@ -12,6 +12,10 @@ import { PostgreSqlDriver } from '@mikro-orm/postgresql'
 
 import { mikroOrmConfig } from './mikroOrm.config'
 import { envEnum } from '../config/enums/env.enum'
+import {
+    CONST_CONFIG_DATABASE,
+    CONST_CONFIG_ENV
+} from '../config/contants/configOption.constant'
 import { IConfigOptions } from '../config/interfaces/ConfigOptions.interface'
 
 @Module({})
@@ -24,10 +28,10 @@ export class DatabaseModule implements OnModuleInit, OnApplicationShutdown {
     ) {}
 
     async onModuleInit() {
-        const dbOptions = this.configService.get('database', {
+        const dbOptions = this.configService.get(CONST_CONFIG_DATABASE, {
             infer: true
         })
-        const envOptions = this.configService.get('env', {
+        const envOptions = this.configService.get(CONST_CONFIG_ENV, {
             infer: true
         })
 
@@ -73,12 +77,15 @@ export class DatabaseModule implements OnModuleInit, OnApplicationShutdown {
                     useFactory: (
                         configService: ConfigService<IConfigOptions, true>
                     ) => {
-                        const envOptions = configService.get('env', {
+                        const envOptions = configService.get(CONST_CONFIG_ENV, {
                             infer: true
                         })
-                        const dbOptions = configService.get('database', {
-                            infer: true
-                        })
+                        const dbOptions = configService.get(
+                            CONST_CONFIG_DATABASE,
+                            {
+                                infer: true
+                            }
+                        )
 
                         return mikroOrmConfig(
                             {

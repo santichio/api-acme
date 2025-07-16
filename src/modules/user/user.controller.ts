@@ -8,6 +8,20 @@ export class UserController {
 
     @Get()
     async log() {
-        return await this.userService.log('Hello world!')
+        const something = await this.userService.log()
+
+        return {
+            message: 'returning something!',
+            data: something,
+            metadata: {
+                pagination: {
+                    test: 'test'
+                },
+                test: 'test'
+            },
+            test: 'test'
+        }
+
+        return 'controller return'
     }
 }

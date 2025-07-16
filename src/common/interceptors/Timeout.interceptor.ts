@@ -10,6 +10,8 @@ import { Observable, throwError, TimeoutError } from 'rxjs'
 import { catchError, timeout } from 'rxjs/operators'
 
 import { IConfigOptions } from '../config/interfaces/ConfigOptions.interface'
+import { CONST_CONFIG_API } from '../config/contants/configOption.constant'
+import { errorMessage } from 'src/lib/errors'
 
 @Injectable()
 export class TimeoutInterceptor implements NestInterceptor {
@@ -18,16 +20,20 @@ export class TimeoutInterceptor implements NestInterceptor {
     ) {}
 
     intercept(_context: ExecutionContext, next: CallHandler): Observable<any> {
-        const apiOptions = this.configService.get('api', { infer: true })
+        const apiOptions = this.configService.get(CONST_CONFIG_API, {
+            infer: true
+        })
 
         return next.handle().pipe(
             timeout(apiOptions.timeoutMillis),
-            catchError((err) => {
+            catchError((err: Error) => {
                 if (err instanceof TimeoutError) {
-                    return throwError(() => new RequestTimeoutException())
+                    return throwError(
+                        () => new RequestTimeoutException(errorMessage.TIMEOUT)
+                    )
                 }
 
-                return throwError(() => new Error(err))
+                return throwError(() => err)
             })
         )
     }

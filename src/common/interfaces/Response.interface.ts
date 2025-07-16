@@ -13,21 +13,31 @@ interface IResponseBase {
     timeStamp: string
 }
 
-export interface IResponse<T> extends IResponseBase {
-    metaData?: IMetaData
-    data?: T
+export interface IResponse extends IResponseBase {
+    metadata?: IMetadata
+    data?: object | []
 }
 
+export type IPreResponse = Pick<IResponse, 'message' | 'data' | 'metadata'>
+
 export interface IResponseError extends IResponseBase {
-    errorRef?: string
-    error?: string
+    errorLog: string
+    error?: string | object
     reqUrl?: string
     reqMethod?: string
     reqHost?: string
 }
 
-export interface IMetaData {
+export interface IMetadata {
+    pagination?: IPagination
+    info?: string
+    extra?: object
+    query?: object
+}
+
+export interface IPagination {
     page?: number
+    count?: number
     limit?: number
     offset?: number
     total?: number
