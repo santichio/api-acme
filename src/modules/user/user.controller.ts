@@ -8,6 +8,8 @@ export class UserController {
 
     @Get()
     log() {
-        return this.userService.log('Hello world!')
+        const something = this.userService.log()
+
+        return "Returning something!"
     }
 }

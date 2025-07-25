@@ -8,29 +8,34 @@ import {
 import { ConfigService } from '@nestjs/config'
 import { MikroOrmModule } from '@mikro-orm/nestjs'
 import { MikroORM } from '@mikro-orm/core'
+import { PostgreSqlDriver } from '@mikro-orm/postgresql'
 
 import { mikroOrmConfig } from './mikroOrm.config'
-import { enviromentsEnum as Env } from '../config/enums/enviroments.enum'
-import { DatabaseOptionsInterface as DbOptions } from '../config/interfaces/ConfigOptions.interface'
-import { PostgreSqlDriver } from '@mikro-orm/postgresql'
+import { envEnum } from '../config/enums/env.enum'
+import {
+    CONST_CONFIG_DATABASE,
+    CONST_CONFIG_ENV
+} from '../config/contants/configOption.constant'
+import { IConfigOptions } from '../config/interfaces/ConfigOptions.interface'
 
 @Module({})
 export class DatabaseModule implements OnModuleInit, OnApplicationShutdown {
     private readonly logger = new Logger(DatabaseModule.name)
 
     constructor(
-        private readonly configService: ConfigService,
+        private readonly configService: ConfigService<IConfigOptions, true>,
         private readonly orm: MikroORM
     ) {}
 
     async onModuleInit() {
-        const autoSync =
-            this.configService.get<boolean>('database.connection.autoSync') ??
-            false
-        const enviroment =
-            this.configService.getOrThrow<Env>('enviroment.nodeEnv')
+        const dbOptions = this.configService.get(CONST_CONFIG_DATABASE, {
+            infer: true
+        })
+        const envOptions = this.configService.get(CONST_CONFIG_ENV, {
+            infer: true
+        })
 
-        if (autoSync && enviroment !== Env.PRODUCTION) {
+        if (dbOptions.autoSync && envOptions.node !== envEnum.PRODUCTION) {
             try {
                 this.logger.log(
                     'Auto-sync enabled. Syncing database schema with entities...'
@@ -57,47 +62,45 @@ export class DatabaseModule implements OnModuleInit, OnApplicationShutdown {
         await this.orm.close(true)
     }
 
-    static register(): DynamicModule {
+    /**
+     * Register a database connection
+     * @param dbName database name
+     * @returns database dynamic module
+     */
+    static register(dbName: string, contextName?: string): DynamicModule {
         return {
             module: DatabaseModule,
             imports: [
                 MikroOrmModule.forRootAsync({
                     inject: [ConfigService],
                     driver: PostgreSqlDriver,
-                    useFactory: (configService: ConfigService) => {
-                        const env =
-                            configService.getOrThrow<Env>('enviroment.nodeEnv')
-                        const dbOptions: DbOptions = {
-                            connection: {
-                                host: configService.getOrThrow<string>(
-                                    'database.connection.host'
-                                ),
-                                port: configService.getOrThrow<number>(
-                                    'database.connection.port'
-                                ),
-                                username: configService.getOrThrow<string>(
-                                    'database.connection.username'
-                                ),
-                                password: configService.getOrThrow<string>(
-                                    'database.connection.password'
-                                ),
-                                maxPoolSize: configService.getOrThrow<number>(
-                                    'database.connection.maxPoolSize'
-                                ),
-                                idleTimeoutMillis:
-                                    configService.getOrThrow<number>(
-                                        'database.connection.idleTimeoutMillis'
-                                    ),
-                                autoSync: configService.get<boolean>(
-                                    'database.connection.autoSync'
-                                )
-                            },
-                            user: configService.getOrThrow<string>(
-                                'database.user'
-                            )
-                        }
+                    useFactory: (
+                        configService: ConfigService<IConfigOptions, true>
+                    ) => {
+                        const envOptions = configService.get(CONST_CONFIG_ENV, {
+                            infer: true
+                        })
+                        const dbOptions = configService.get(
+                            CONST_CONFIG_DATABASE,
+                            {
+                                infer: true
+                            }
+                        )
 
-                        return mikroOrmConfig(dbOptions, env)
+                        return mikroOrmConfig(
+                            {
+                                host: dbOptions.host,
+                                port: dbOptions.port,
+                                username: dbOptions.username,
+                                password: dbOptions.password,
+                                maxPoolSize: dbOptions.maxPoolSize,
+                                idleTimeoutMillis: dbOptions.idleTimeoutMillis,
+                                autoSync: false
+                            },
+                            envOptions.node,
+                            dbName,
+                            contextName
+                        )
                     }
                 })
             ]

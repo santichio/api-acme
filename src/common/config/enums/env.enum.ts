@@ -1,4 +1,4 @@
-export enum enviromentsEnum {
+export enum envEnum {
     LOCALHOST = 'loc',
     DEVELOP = 'dev',
     HOMOLOGATION = 'hml',
