@@ -1,38 +1,33 @@
-import { deploymentEnviromentsEnum } from '../enums/deploymentEnviroments.enum'
-import { enviromentsEnum } from '../enums/enviroments.enum'
+import { deployEnum } from '../enums/deploy.enum'
+import { envEnum } from '../enums/env.enum'
 
 // Layer 0
-export interface ConfigOptionsInterface {
-    enviroment?: EnviromentOptionsInterface
-    api?: ApiOptionsInterface
-    database: DatabaseOptionsInterface
+export interface IConfigOptions {
+    env: IEnvOptions
+    api: IApiOptions
+    database: IDatabaseOptions
 }
 
 // Layer 1
-export interface EnviromentOptionsInterface {
-    nodeEnv?: enviromentsEnum
-    deployment?: deploymentEnviromentsEnum
+export interface IEnvOptions {
+    node: envEnum
+    deploy: deployEnum
 }
 
 // Layer 1
-export interface ApiOptionsInterface {
-    port?: number
-    host?: string
+export interface IApiOptions {
+    port: number
+    hos: string
+    timeoutMillis: number
 }
 
 // Layer 1
-export interface DatabaseOptionsInterface {
-    connection: DatabaseConnectionOptionsInterface
-    user: string
-}
-
-// Layer 2
-export interface DatabaseConnectionOptionsInterface {
+export interface IDatabaseOptions {
     host: string
     port: number
     username: string
     password: string
-    maxPoolSize?: number
-    idleTimeoutMillis?: number
-    autoSync?: boolean
+    maxPoolSize: number
+    idleTimeoutMillis: number
+    autoSync: boolean
 }

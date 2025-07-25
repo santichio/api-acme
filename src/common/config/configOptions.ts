@@ -1,9 +1,9 @@
 import * as dotenv from 'dotenv'
 import * as Joi from 'joi'
 
-import { ConfigOptionsInterface } from './interfaces/ConfigOptions.interface'
+import { IConfigOptions } from './interfaces/ConfigOptions.interface'
 import { configOptionsSchema } from './schemas/configOptions.schema'
-import { EnvFileInterface } from './interfaces/envFile.interface'
+import { IEnvFile } from './interfaces/envFile.interface'
 import { ErrorHandler } from 'src/utils/errorHandling/ErrorHandler'
 
 /**
@@ -11,35 +11,32 @@ import { ErrorHandler } from 'src/utils/errorHandling/ErrorHandler'
  * Tries to find config file in root directory
  * @returns Configuration options
  */
-export default async (): Promise<ConfigOptionsInterface> => {
+export default async (): Promise<IConfigOptions> => {
     try {
         const envFile = dotenv.config({ path: './.env' }).parsed
         const values = (await configOptionsSchema.validateAsync(envFile, {
             abortEarly: false,
             cache: true
-        })) as EnvFileInterface
+        })) as IEnvFile
 
         return {
-            enviroment: {
-                nodeEnv: values.NODE_ENV,
-                deployment: values.DEPLOYMENT
+            env: {
+                node: values.ENV_NODE,
+                deploy: values.ENV_DEPLOY
             },
             api: {
                 port: values.API_PORT,
-                host: values.API_HOST
+                hos: values.API_HOST,
+                timeoutMillis: values.API_TIMEOUT_MILLIS
             },
             database: {
-                connection: {
-                    host: values.DATABASE_CONNECTION_HOST,
-                    port: values.DATABASE_CONNECTION_PORT,
-                    username: values.DATABASE_CONNECTION_USER,
-                    password: values.DATABASE_CONNECTION_PASSWORD,
-                    maxPoolSize: values.DATABASE_CONNECTION_MAX_POOL_SIZE,
-                    idleTimeoutMillis:
-                        values.DATABASE_CONNECTION_IDLE_TIMEOUT_MILLIS,
-                    autoSync: values.DATABASE_CONNECTION_AUTO_SYNC
-                },
-                user: values.DATABASE_USER
+                host: values.DATABASE_HOST,
+                port: values.DATABASE_PORT,
+                username: values.DATABASE_USERNAME,
+                password: values.DATABASE_PASSWORD,
+                maxPoolSize: values.DATABASE_MAX_POOL_SIZE,
+                idleTimeoutMillis: values.API_TIMEOUT_MILLIS,
+                autoSync: values.DATABASE_AUTO_SYNC
             }
         }
     } catch (err) {
