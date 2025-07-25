@@ -7,6 +7,5 @@ export const databaseOptionsSchema = {
     DATABASE_PASSWORD: Joi.string().required(),
     DATABASE_MAX_POOL_SIZE: Joi.number().default(40),
     DATABASE_IDLE_TIMEOUT_MILLIS: Joi.number().default(10000),
-    DATABASE_AUTO_SYNC: Joi.boolean().default(false),
-    DATABASE_NAME_USER: Joi.string().default('db_user')
+    DATABASE_AUTO_SYNC: Joi.boolean().default(false)
 }

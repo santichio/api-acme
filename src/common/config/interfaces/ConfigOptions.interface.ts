@@ -30,5 +30,4 @@ export interface IDatabaseOptions {
     maxPoolSize: number
     idleTimeoutMillis: number
     autoSync: boolean
-    nameDbUser: string
 }

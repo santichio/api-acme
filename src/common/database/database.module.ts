@@ -95,8 +95,7 @@ export class DatabaseModule implements OnModuleInit, OnApplicationShutdown {
                                 password: dbOptions.password,
                                 maxPoolSize: dbOptions.maxPoolSize,
                                 idleTimeoutMillis: dbOptions.idleTimeoutMillis,
-                                autoSync: false,
-                                nameDbUser: ''
+                                autoSync: false
                             },
                             envOptions.node,
                             dbName,

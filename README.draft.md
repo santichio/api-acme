@@ -4,73 +4,52 @@
 2. Update config interface
 3. Update database module
 
-## ENV config file template
+## Development ENV file 
 
 ```txt
 # Environment options
-NODE_ENV=dev
+ENV_NODE = "dev"
+ENV_DEPLOY = "loc"
 
 # API configuration options
-API_PORT=5432
-API_HOST=localhost
+API_PORT = 3000
+API_HOST = "localhost"
+API_TIMEOUT_MILLIS = 3000
 
 # Database configuration options
-DATABASE_CONNECTION_HOST=localhost
-DATABASE_CONNECTION_PORT=5432
-DATABASE_CONNECTION_USER=acme
-DATABASE_CONNECTION_PASSWORD=acme@123
-DATABASE_ORM_MAX_POOL_SIZE=40
-DATABASE_ORM_IDLE_TIMEOUT_MILLIS=10000
-DATABASE_ORM_AUTO_SYNC=false
-DATABASE_USER=db_user
+DATABASE_HOST = "localhost"
+DATABASE_PORT = 5432
+DATABASE_USERNAME = "acme"
+DATABASE_PASSWORD = "acme@123"
+DATABASE_MAX_POOL_SIZE = 40
+DATABASE_AUTO_SYNC = true
 ```
 
-## YAML config file template
-
-```yaml
-env:
-  nodeEnv: dev
-api:
-  port: 3000
-  host: localhost
-database:
-  connection:
-    host: localhost
-    port: 5432
-    username: acme
-    password: acme@123
-  orm:
-    maxPoolSize: 40
-    idleTimeoutMillis: 10000
-    autoSync: false
-  user: db_user
-```
-
-## Configuration file schema
+## ENV file variables list
 
 **Enviroment** 
 
 | KEY           | VALUE TYPE                           | DEFAULT   | DESCRIPTION                   |
 |---------------|--------------------------------------|-----------|-------------------------------|
-| `NODE_ENV`    | enum(dev, hml, prd)                  | dev       | *Define selected enviroment*  |
-| `DEPLOYMENT`  | enum(localhost, docker-compose, k8s) | localhost | *Define wherer the app gonna* |
+| `ENV_NODE`    | enum(dev, hml, prd)                  | dev       | *Define selected enviroment*  |
+| `ENV_DEPLOY`  | enum(localhost, docker-compose, k8s) | localhost | *Define wherer the app gonna* |
 
 **API**
 
-| KEY           | VALUE TYPE | DEFAULT   | DESCRIPTION     |
-|---------------|------------|-----------|-----------------|
-| `API_PORT`    | number     | 3000      | *API run port*  |
-| `API_HOST`    | string     | localhost | *API base host* |
+| KEY                     | VALUE TYPE | DEFAULT   | DESCRIPTION        |
+|-------------------------|------------|-----------|--------------------|
+| `API_PORT`              | number     | 3000      | *API run port*     |
+| `API_HOST`              | string     | localhost | *API base host*    |
+| `API_TIMEOUT_MILLIS`    | number     | 3000      | *API timeout time* |
 
 **Database**
 
-| KEY                                       | VALUE TYPE | DEFAULT   | DESCRIPTION                              |
-|-------------------------------------------|------------|-----------|------------------------------------------|
-| `DATABASE_CONNECTION_HOST`                | string     | localhost | *Database cluster base host*             |
-| `DATABASE_CONNECTION_PORT`                | number     | 5432      | *Database cluster port*                  |
-| `DATABASE_CONNECTION_USER`                | string     | n/a       | *Database username connection*           |
-| `DATABASE_CONNECTION_PASSWORD`            | string     | n/a       | *Database password connection*           |
-| `DATABASE_CONNECTION_MAX_POOL_SIZE`       | bool       | false     | *MikroORM auto sync entities in databse* |
-| `DATABASE_CONNECTION_IDLE_TIMEOUT_MILLIS` | number     | 40        | *MikroORM pool size limit*               |
-| `DATABASE_CONNECTION_AUTO_SYNC`           | number     | 10000     | *MikroORM timeout time in milliseconds*  |
-| `DATABASE_USER`                           | string     | n/a       | *User database name*                     |
+| KEY                            | VALUE TYPE | DEFAULT   | DESCRIPTION                              |
+|--------------------------------|------------|-----------|------------------------------------------|
+| `DATABASE_HOST`                | string     | localhost | *Database cluster base host*             |
+| `DATABASE_PORT`                | number     | 5432      | *Database cluster port*                  |
+| `DATABASE_USERNAME`            | string     | n/a       | *Database username connection*           |
+| `DATABASE_PASSWORD`            | string     | n/a       | *Database password connection*           |
+| `DATABASE_MAX_POOL_SIZE`       | bool       | false     | *MikroORM auto sync entities in databse* |
+| `DATABASE_IDLE_TIMEOUT_MILLIS` | number     | 40        | *MikroORM pool size limit*               |
+| `DATABASE_AUTO_SYNC`           | number     | 10000     | *MikroORM timeout time in milliseconds*  |

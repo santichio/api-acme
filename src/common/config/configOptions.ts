@@ -36,8 +36,7 @@ export default async (): Promise<IConfigOptions> => {
                 password: values.DATABASE_PASSWORD,
                 maxPoolSize: values.DATABASE_MAX_POOL_SIZE,
                 idleTimeoutMillis: values.API_TIMEOUT_MILLIS,
-                autoSync: values.DATABASE_AUTO_SYNC,
-                nameDbUser: values.DATABASE_NAME_USER
+                autoSync: values.DATABASE_AUTO_SYNC
             }
         }
     } catch (err) {
