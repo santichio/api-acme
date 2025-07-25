@@ -9,7 +9,7 @@ import { catchError, map, Observable, throwError } from 'rxjs'
 import { FastifyReply as Response } from 'fastify'
 
 import { IResponse, IPreResponse } from '../interfaces/Response.interface'
-import { errorMessage } from 'src/lib/errors'
+import { errorMessage, responseMessage } from 'src/lib/errors'
 
 @Injectable()
 export class ResponseInterceptor<T> implements NestInterceptor<T, IResponse> {
@@ -21,17 +21,17 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, IResponse> {
 
         return next.handle().pipe(
             map((val: IPreResponse) => {
-                console.log(
-                    !(typeof val === 'string' || typeof val === 'object')
-                )
                 if (!(typeof val === 'string' || typeof val === 'object')) {
-                    console.log('banana')
                     throw new NotImplementedException(
                         errorMessage.NOT_IMPLEMETED
                     )
                 } else {
+                    const message = typeof val === 'string' ? val : val.message
+
                     const responseBody: IResponse = {
-                        message: typeof val === 'string' ? val : val.message,
+                        message: message
+                            ? message
+                            : responseMessage.NOT_PROVIDED,
                         statusCode: response.statusCode,
                         timeStamp: new Date().toISOString(),
                         data: val.data,
