@@ -7,21 +7,9 @@ export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Get()
-    async log() {
-        const something = await this.userService.log()
+    log() {
+        const something = this.userService.log()
 
-        return {
-            message: 'returning something!',
-            data: something,
-            metadata: {
-                pagination: {
-                    test: 'test'
-                },
-                test: 'test'
-            },
-            test: 'test'
-        }
-
-        return 'controller return'
+        return "Returning something!"
     }
 }

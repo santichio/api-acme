@@ -6,12 +6,13 @@ import { IPreResponse } from 'src/common/interfaces/Response.interface'
 export class UserService {
     constructor(@InjectCls() readonly cls: ClsService) {}
 
-    async log() {
+    log() {
         // console.log(`${this.cls.getId()} > ${message}`)
 
         return {
-            message: 'You got a banana!',
-            data: 'banana'
+            foo: {
+                foo: 'bar'
+            }
         }
 
         // return 'banana'
