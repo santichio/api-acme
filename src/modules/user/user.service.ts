@@ -1,36 +1,26 @@
-import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common'
-import { ClsService, InjectCls } from 'nestjs-cls'
-import { IPreResponse } from 'src/common/interfaces/Response.interface'
+import { Injectable } from '@nestjs/common'
+import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
 
 @Injectable()
 export class UserService {
-    constructor(@InjectCls() readonly cls: ClsService) {}
+    create(createUserDto: CreateUserDto) {
+        return 'This action adds a new user'
+    }
 
-    log() {
-        // console.log(`${this.cls.getId()} > ${message}`)
+    findAll() {
+        return `This action returns all user`
+    }
 
-        return {
-            foo: {
-                foo: 'bar'
-            }
-        }
+    findOne(id: number) {
+        return `This action returns a #${id} user`
+    }
 
-        // return 'banana'
+    update(id: number, updateUserDto: UpdateUserDto) {
+        return `This action updates a #${id} user`
+    }
 
-        // return {
-        //     banana: 'banana'
-        // }
-
-        // throw new NotFoundException()
-
-        // throw new Error('Banana')
-
-        // await new Promise(() =>
-        //     setTimeout(() => {
-        //         return {
-        //             banana: 'TIMEOUT'
-        //         }
-        //     }, 3001)
-        // )
+    remove(id: number) {
+        return `This action removes a #${id} user`
     }
 }
