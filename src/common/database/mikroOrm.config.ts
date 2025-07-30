@@ -1,9 +1,9 @@
 import { defineConfig, Options } from '@mikro-orm/postgresql'
 import { Migrator } from '@mikro-orm/migrations'
+import { SqlHighlighter } from '@mikro-orm/sql-highlighter'
 
 import { IDatabaseOptions } from '../config/interfaces/ConfigOptions.interface'
 import { envEnum } from '../config/enums/env.enum'
-import { SqlHighlighter } from '@mikro-orm/sql-highlighter'
 
 /**
  * Build a MikroORM connection options object, based on node enviroment.
