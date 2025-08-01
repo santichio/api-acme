@@ -45,7 +45,8 @@ export function mikroOrmConfig(
         extensions: [Migrator],
         schemaGenerator: {
             disableForeignKeys: false
-        }
+        },
+        persistOnCreate: true
     }
 
     // Include context name if it provided
