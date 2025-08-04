@@ -28,6 +28,8 @@ export class DatabaseModule implements OnModuleInit, OnApplicationShutdown {
     ) {}
 
     async onModuleInit() {
+        await this.orm.getMigrator().up()
+
         const dbOptions = this.configService.get(CONST_CONFIG_DATABASE, {
             infer: true
         })

@@ -27,8 +27,8 @@ export function mikroOrmConfig(
         user: options.username,
         password: options.password,
         dbName,
-        entities: ['./dist/**/*.entity.js'],
-        entitiesTs: ['./src/**/*.entity.ts'],
+        entities: ['dist/**/*.entity.js'],
+        entitiesTs: ['src/**/*.entity.ts'],
         strict: true,
         forceUtcTimezone: true,
         migrations: {

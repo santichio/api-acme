@@ -6,6 +6,7 @@ import {
 
 import { AppModule } from './app.module'
 import { ConsoleLogger } from '@nestjs/common'
+import { MikroORM } from '@mikro-orm/core'
 
 async function bootstrap() {
     const app = await NestFactory.create<NestFastifyApplication>(
@@ -19,6 +20,9 @@ async function bootstrap() {
             })
         }
     )
+
+    await app.get(MikroORM).getSchemaGenerator().ensureDatabase()
+    await app.get(MikroORM).getSchemaGenerator().updateSchema()
 
     app.enableShutdownHooks()
 
