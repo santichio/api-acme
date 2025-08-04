@@ -3,6 +3,6 @@
  * @param username The username of created user entity
  * @returns The response message string
  */
-export const successMessage = (username) => ({
+export const userSuccessMessage = (username) => ({
     USER_CREATED: `New user ${username} was created succesfully!`
 })

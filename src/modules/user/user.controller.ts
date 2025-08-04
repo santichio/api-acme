@@ -12,7 +12,7 @@ import {
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
-import { successMessage } from 'src/lib/user.lib'
+import { userSuccessMessage } from 'src/lib/user.lib'
 
 @Controller('user')
 export class UserController {
@@ -23,7 +23,9 @@ export class UserController {
     async create(@Body() payload: CreateUserDto) {
         const user = await this.userService.createUser(payload)
 
-        return user ? successMessage(payload.username).USER_CREATED : 'ERROR!'
+        return user
+            ? userSuccessMessage(payload.username).USER_CREATED
+            : 'ERROR!'
     }
 
     @Get()

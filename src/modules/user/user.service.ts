@@ -5,6 +5,7 @@ import { EntityManager, EntityRepository } from '@mikro-orm/postgresql'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { UserEntity } from './entities/user.entity'
+import { userSuccessMessage } from 'src/lib/user.lib'
 
 @Injectable()
 export class UserService {
@@ -20,17 +21,15 @@ export class UserService {
             partial: true
         })
 
-        console.log(user)
-
         try {
-            await this.em.persistAndFlush(user)
+            await this.em.flush()
 
             return true
         } catch (err) {
-            console.log('banana')
+            console.log(err)
 
             throw new InternalServerErrorException(
-                
+                userSuccessMessage(user.username).USER_CREATED
             )
         }
     }
