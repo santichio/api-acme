@@ -1,14 +1,41 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, InternalServerErrorException } from '@nestjs/common'
+import { InjectRepository } from '@mikro-orm/nestjs'
+import { EntityManager, EntityRepository } from '@mikro-orm/postgresql'
+
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { UserEntity } from './entities/user.entity'
 
 @Injectable()
 export class UserService {
-    create(createUserDto: CreateUserDto) {
-        return 'This action adds a new user'
+    constructor(
+        @InjectRepository(UserEntity)
+        private readonly userRepository: EntityRepository<UserEntity>,
+        private readonly em: EntityManager
+    ) {}
+
+    async createUser(payload: CreateUserDto) {
+        const user = this.userRepository.create(payload, {
+            managed: true,
+            partial: true
+        })
+
+        console.log(user)
+
+        try {
+            await this.em.persistAndFlush(user)
+
+            return true
+        } catch (err) {
+            console.log('banana')
+
+            throw new InternalServerErrorException(
+                
+            )
+        }
     }
 
-    findAll() {
+    findAllUsers() {
         return `This action returns all user`
     }
 

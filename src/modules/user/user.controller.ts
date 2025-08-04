@@ -5,24 +5,30 @@ import {
     Body,
     Patch,
     Param,
-    Delete
+    Delete,
+    HttpCode,
+    HttpStatus
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { successMessage } from 'src/lib/user.lib'
 
 @Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Post()
-    create(@Body() createUserDto: CreateUserDto) {
-        return this.userService.create(createUserDto)
+    @HttpCode(HttpStatus.CREATED)
+    async create(@Body() payload: CreateUserDto) {
+        const user = await this.userService.createUser(payload)
+
+        return user ? successMessage(payload.username).USER_CREATED : 'ERROR!'
     }
 
     @Get()
     findAll() {
-        return this.userService.findAll()
+        return this.userService.findAllUsers()
     }
 
     @Get(':id')
